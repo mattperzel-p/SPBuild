@@ -5,8 +5,6 @@ import os
 import subprocess
 import time
 
-
-
 class Environment( object ):
     def __init__( self, output ):
         self.actions = []
@@ -160,22 +158,6 @@ class CopyCommand( object ):
 def clean():
     delete( output )
 
-def build():
-    env = Environment("build\\")
-
-    coffee = FileAction('CoffeeScript Compiler',
-                    compare=FileTimeCompare(),
-                    src='source\\scripts\\*.coffee', dest=env.output + 'scripts\\',
-                    command=SubProcessCommand('utils\\CoffeeSharp\\Coffee.exe',
-                    ['-o', '$DEST$', '-c', '$CHANGEDFILES$']), transform=FileExtTransform('js'))
-
-    copy_files = FileAction( 'Copying client', src='source\\*.*', dest=env.output, command=CopyCommand(), transform=CopyTransform(), compare=FileTimeCompare() )
-    env.add_action( coffee )
-    env.add_action( copy_files )
-    env.run()
-
-#copy = Action( 'source/*.*', output, copy, True, False )
-
 def copy( files, dest ):
     for file in files:
         print( "Copying " + file + " to " + dest )
@@ -188,8 +170,6 @@ def delete( dir ):
     print( 'Deleting %(directory)s' % {'directory':dir} )
     shutil.rmtree( dir )
 
-
-			
 	
 		
 		
