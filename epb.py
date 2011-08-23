@@ -120,9 +120,9 @@ class FileTimeCompare( object ):
                 stats = os.stat( file[1] )
                 destLastmod_date = time.localtime( stats[8] )
 
-            if destLastmod_date != None:
-                if srcLastmod_date > destLastmod_date:
+            if destLastmod_date == None or srcLastmod_date > destLastmod_date :
                     changedFileList.append( file[0] )
+
         return changedFileList
 
 class SubProcessCommand( object ):
@@ -138,13 +138,11 @@ class SubProcessCommand( object ):
             if var == None:
                 var = param
 
-            print( var )
             if type(var) == list:
                 call += var
             else:
                 call.append( var )
 
-        print call
         output = subprocess.check_call( call )
         print( output )
 
