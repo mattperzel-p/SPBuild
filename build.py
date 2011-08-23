@@ -6,12 +6,12 @@ parser.add_argument('target', metavar='t', nargs='+', help='target')
 args = parser.parse_args()
 targets = args.target
 
+env = Environment("build\\")
+
 def clean():
-    delete( output )
+    delete( env.output )
 
 def build():
-    env = Environment("build\\")
-
     coffee = FileAction('CoffeeScript Compiler',
                     compare=FileTimeCompare(),
                     src='source\\scripts\\*.coffee', dest=env.output + 'scripts\\',
